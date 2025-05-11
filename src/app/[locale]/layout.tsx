@@ -1,25 +1,30 @@
-import '../globals.css';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import React from 'react';
+import { routing } from '@/i18n/routing';
 
-export default async function LocaleLayout({
-  children,
-  params
-}: {
+export function generateStaticParams() {
+  return routing.locales.map(locale => ({ locale }));
+}
+
+export default async function LocaleLayout(props: {
   children: React.ReactNode;
   params: {
     locale: string
   }
 }) {
-  const messages = await getMessages();
+  const resolvedParams = await Promise.resolve(props.params);
+  const locale = resolvedParams.locale || routing.defaultLocale;
+  const messages = await getMessages({ locale });
+
   return (
-    <html lang={params.locale}>
-      <body className="antialiased">
-        <NextIntlClientProvider messages={messages} locale={params.locale}>
-          {children}
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <>
+      <NextIntlClientProvider
+        messages={messages}
+        locale={locale}
+      >
+        {props.children}
+      </NextIntlClientProvider>
+    </>
   );
 }

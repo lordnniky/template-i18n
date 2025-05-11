@@ -1,10 +1,15 @@
 import createMiddleware from 'next-intl/middleware';
 import { routing } from './src/i18n/routing';
 
-export default createMiddleware(routing);
+export default createMiddleware({
+  locales: routing.locales,
+  defaultLocale: routing.defaultLocale,
 
-// Isso é importante: limitar o escopo do middleware para apenas
-// as URLs que realmente devem ser processadas pelo i18n
+  localeDetection: true,
+
+  localePrefix: 'always'
+});
+
 export const config = {
-  matcher: ['/', '/(pt|en)/:path*'],
+  matcher: ['/((?!api|_next|.*\\..*).*)']
 };
