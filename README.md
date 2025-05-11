@@ -1,36 +1,141 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Template i18n Next.js
 
-## Getting Started
+Este projeto é um template pronto para desenvolvimento de aplicações Next.js com suporte completo a internacionalização (i18n) usando [next-intl](https://github.com/amannn/next-intl).
 
-First, run the development server:
+## Recursos
+
+- **Internacionalização (i18n)** com carregamento dinâmico de mensagens.
+- **Estrutura modular** para traduções por página e seção.
+- **Middleware para detecção automática de idioma**.
+- **Pronto para produção** com TypeScript, TailwindCSS e ESLint.
+
+---
+
+## Começando
+
+### 1. Instalação
+
+Clone o repositório e instale as dependências:
+
+```bash
+git clone https://github.com/Jonhvmp/template-i18n.git
+cd template-i18n
+npm install
+```
+
+### 2. Rodando o projeto
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+O projeto estará disponível em `http://localhost:6020`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Estrutura de Pastas
 
-## Learn More
+```text
+locales/
+  ├── en/
+  │   ├── common.json
+  │   └── pages/
+  │       └── home/
+  │           ├── hero.json
+  │           └── features.json
+  └── pt/
+      ├── common.json
+      └── pages/
+          └── home/
+              ├── hero.json
+              └── features.json
+src/
+  ├── app/
+  │   ├── [locale]/
+  │   │   ├── layout.tsx
+  │   │   └── page.tsx
+  │   └── globals.css
+  ├── i18n/
+  │   ├── request.ts
+  │   └── routing.ts
+  └── hooks/
+      └── usePageTranslations.ts
+middleware.ts
+next.config.ts
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Como adicionar novos idiomas
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Crie uma nova pasta em `locales/` com o código do idioma (ex: `es` para espanhol).
+2. Adicione os arquivos de tradução necessários, seguindo o padrão das pastas existentes.
+3. Atualize o array de idiomas suportados em `src/i18n/routing.ts`:
 
-## Deploy on Vercel
+```typescript
+export const routing = {
+  locales: ['en', 'pt', 'es'],
+  defaultLocale: 'en'
+};
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Como adicionar traduções para novas páginas/seções
+
+1. Crie o arquivo de tradução correspondente em `locales/{idioma}/pages/{pagina}/{secao}.json`.
+2. No componente, utilize o hook `useTranslations` ou o custom hook `usePageTranslations`:
+
+```typescript
+import { usePageTranslations } from '@/hooks/usePageTranslations';
+
+const t = usePageTranslations('home', 'hero');
+t('title'); // Busca a chave "title" em pages.home.hero
+```
+
+---
+
+## Convenções
+
+- **common.json**: Traduções globais.
+- **pages/**: Traduções específicas por página e seção.
+- **Chaves**: Use nomes descritivos e evite duplicidade.
+
+---
+
+## Middleware e Detecção de Idioma
+
+O arquivo `middleware.ts` garante que o idioma do usuário seja detectado automaticamente e que as rotas estejam sempre prefixadas pelo locale (`/en`, `/pt`, etc).
+
+---
+
+## Dicas de Desenvolvimento
+
+- Sempre adicione novas chaves de tradução em todos os idiomas suportados.
+- Utilize o ESLint para manter a qualidade do código: `npm run lint`.
+- Para componentes reutilizáveis, prefira usar traduções do `common.json`.
+
+---
+
+## Deploy
+
+Para build de produção:
+
+```bash
+npm run build
+npm start
+```
+
+---
+
+## Referências
+
+- [Next.js](https://nextjs.org/)
+- [next-intl](https://github.com/amannn/next-intl)
+- [TailwindCSS](https://tailwindcss.com/)
+
+---
+
+## Licença
+
+MIT
